@@ -8,19 +8,19 @@
 | Frame Mass | $m_{frame}$ | 18.5 kg |
 | Handlebar Mass | $m_{handle}$ | 1.9 kg |
 | Front / Rear Wheel Mass | $m_{wheel}$ | 2.5 kg / 4.5 kg |
-| Frame Inertia ($I_{xx}, I_{yy}, I_{zz}$) | $I_{frame}$ | [0.95, 1.12, 0.45] kg$\cdot$m$^2$ |
+| Frame Inertia ($I_{xx}, I_{yy}, I_{zz}$) | $I_{frame}$ | [0.95, 1.12, 0.45] kg·m² |
 | Center of Gravity Height | $h_{CoG}$ | 0.65 m |
 | **_Geometric Kinematics_** | | |
 | Wheelbase | $L$ | 1.1 m |
 | Wheel Radius | $r_{wheel}$ | 0.33 m |
-| Steering Axis Tilt (Caster Angle) | $\alpha$ | 20.0$^{\circ}$ |
+| Steering Axis Tilt (Caster Angle) | $\alpha$ | 20.0° |
 | Mechanical Trail | $t_{trail}$ | 0.11 m |
 | Fork Offset | $l_{offset}$ | 0.01 m |
-| Max Steering Angle | $\delta_{max}$ | $\pm 45^{\circ}$ |
+| Max Steering Angle | $\delta_{max}$ | $\pm 45$° |
 | **_Actuator Dynamics_** | | |
-| Steering Motor Max Torque | $\tau_{steer}^{max}$ | 12.0 N$\cdot$m |
-| Steering Joint Damping | $d_{steer}$ | 0.5 N$\cdot$m$\cdot$s/rad |
-| Drive Motor Max Torque | $\tau_{drive}^{max}$ | 40.0 N$\cdot$m |
+| Steering Motor Max Torque | $\tau_{steer}^{max}$ | 12.0 N·m |
+| Steering Joint Damping | $d_{steer}$ | 0.5 N·m·s/rad |
+| Drive Motor Max Torque | $\tau_{drive}^{max}$ | 40.0 N·m |
 | Physics Simulation Step | $dt_{sim}$ | 0.05 s (50 Hz) |
 | **_Contact & Surface Interaction_** | | |
 | Surface Friction Coefficient | $\mu$ | $\mathcal{U}(0.5, 1.5)$ |
