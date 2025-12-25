@@ -1,6 +1,6 @@
 # CycleRL Configurations
 
-## **Physical Parameters and Hyperparameters of the Simulation Environment (Isaac Sim)**  
+## **1 Physical Parameters and Hyperparameters of the Simulation Environment (Isaac Sim)**  
 
 | Parameter Category | Symbol | Value/Range |
 | :--- | :---: | :--- |
@@ -36,7 +36,7 @@
 > *Note: Inertial values are estimated from the USD model. Friction coefficients are randomized during training as part of the domain randomization strategy.*
 
 
-## Training Configurations
+## **2 Training Configurations**
 
 | Hyperparameters                  | Value                           |
 | -------------------------------- | ------------------------------- |
@@ -59,7 +59,53 @@
 > Note: MLP includes input-to-hidden and hidden-to-output transformations for 8-dimensional input and 2-dimensional output.
 
 
-## Specifications of Hardware Platform
+## **3 Implementation Details of Baseline Controllers**
+**A. Linear Quadratic Regulator (LQR)**
+
+**(1) Modeling and Linearization**
+The LQR baseline is founded on the linearized dynamics of a bicycle modeled as an inverted pendulum. The state-space equation is defined as $\dot{x} = A(v)x + B(v)u$, where the state vector $x = [\phi, \dot{\phi}, \delta]^T$ consists of the roll angle, roll rate, and steering angle, and the control input $u = \dot{\delta}$ represents the steering rate command.
+
+The system matrices derived from the linearized equations of motion at a velocity $v$ are:
+$$  
+A(v) = \begin{bmatrix} 0 & 1 & 0 \\ \frac{g}{h} & 0 & -\frac{v^2}{hL} \\ 0 & 0 & 0 \end{bmatrix}, \quad
+B(v) = \begin{bmatrix} 0 \\ -\frac{v}{L} \\ 1 \end{bmatrix}
+$$
+where $g$ is gravity, $h$ is the center of mass height, and $L$ is the wheelbase.
+
+**(2) Gain Scheduling and Tracking**
+Since the system dynamics $A(v)$ and $B(v)$ are velocity-dependent, a single gain matrix $K$ cannot stabilize the vehicle across the entire operating range. We employed a **gain scheduling** strategy:
+a)  **Offline Computation:** We computed optimal gain matrices $K(v)$ by solving the Algebraic Riccati Equation for velocities $v \in [0.5, 10]$ m/s with a step size of 0.1 m/s.
+b)  **Online Lookup:** During simulation, the controller linearly interpolates $K(v)$ based on the current velocity.
+c)  **Reference Tracking:** To track a target steering angle $\delta_{cmd}$, we calculate a physics-based reference state $x_{ref} = [\phi_{ref}, 0, \delta_{cmd}]^T$, where the equilibrium roll angle is given by $\phi_{ref} \approx \frac{v^2}{gL}\delta_{cmd}$. The control law is:  
+    $$ u = -K(v)(x - x_{ref}) $$
+
+**(3) Parameter Tuning**
+The cost function weights were tuned to prioritize upright stability. The state weighting matrix $Q$ and control weighting $R$ were set as follows:
+*   $Q = \text{diag}[1000, 10, 100]$: High penalty on roll angle ($\phi$) to ensure balance, moderate penalty on steering angle ($\delta$).
+*   $R = 1$: Penalizes aggressive control action
+
+**B. Cascaded PID Controller**
+
+**(1) Control Architecture**
+The PID baseline adopts a **dual-loop cascaded architecture** to handle the underactuated nature of the bicycle:
+*   **Outer Loop (Trajectory):** Maps the user's steering command $\delta_{cmd}$ to a required roll angle $\phi_{ref}$ necessary to sustain the turn without falling (balancing centrifugal force).
+    $$ \phi_{ref} = \text{clip}\left( \frac{v^2}{gL}\delta_{cmd}, -\phi_{max}, \phi_{max} \right) $$
+*   **Inner Loop (Balance):** A PD controller that calculates the steering action to track the reference roll angle.
+    $$ \delta_{out} = K_p(v)(\phi - \phi_{ref}) + K_d(v)\dot{\phi} $$
+
+**(2) Velocity-Dependent Gain Scaling**
+To address the changing sensitivity of the vehicle's response to steering inputs at different speeds, the PID gains are scaled inversely with the square of the velocity:
+$$ K_p(v) = K_{p,base} \cdot \left(\frac{v_{ref}}{v}\right)^2, \quad K_d(v) = K_{d,base} \cdot \left(\frac{v_{ref}}{v}\right)^2 $$
+This scaling ensures that at low speeds (where steering has less effect on roll), the gains are increased, and at high speeds, they are dampened to prevent oscillation.
+
+**(3) Tuning Process**
+The base parameters ($K_{p,base}, K_{d,base}$) were tuned at a reference velocity $v_{ref}=3.0$ m/s using the Ziegler-Nichols heuristic:  
+1.  $K_d$ was set to 0, and $K_p$ was increased until the system exhibited sustained oscillation around the upright position.  
+2.  $K_d$ was then introduced to provide damping and eliminate overshoot.  
+3.  The velocity scaling factor was clipped to the range $[0.2, 5.0]$ to prevent instability at extreme speeds.
+
+
+## **4 Specifications of Hardware Platform**
 
 | Component                 | Specification                   |
 | ------------------------- | ------------------------------- |
