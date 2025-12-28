@@ -71,15 +71,14 @@ The system matrices derived from the linearized equations of motion at a velocit
 **(2) Gain Scheduling and Tracking**
 
 Since the system dynamics $A(v)$ and $B(v)$ are velocity-dependent, a single gain matrix $K$ cannot stabilize the vehicle across the entire operating range. We employed a **gain scheduling** strategy:
-a)  **Offline Computation:** We computed optimal gain matrices $K(v)$ by solving the Algebraic Riccati Equation for velocities $v \in [0.5, 10]$ m/s with a step size of 0.1 m/s.
-b)  **Online Lookup:** During simulation, the controller linearly interpolates $K(v)$ based on the current velocity.
+a)  **Real-time Gain Computation**: For each control step, the optimal gain matrix $K(v)$ is computed on-the-fly by solving the continuous-time Algebraic Riccati Equation using the current velocity $v$. This avoids the need for offline lookup tables and ensures exact gain matching at any speed.
 c)  **Reference Tracking:** To track a target steering angle $\delta_{cmd}$, we calculate a physics-based reference state $x_{ref} = [\phi_{ref}, 0, \delta_{cmd}]^T$, where the equilibrium roll angle is given by $\phi_{ref} \approx \frac{v^2}{gL}\delta_{cmd}$. The control law is: $u = -K(v)(x - x_{ref})$
 
 **(3) Parameter Tuning**
 
 The cost function weights were tuned to prioritize upright stability. The state weighting matrix $Q$ and control weighting $R$ were set as follows:
-*   $Q = \text{diag}[1000, 10, 100]$: High penalty on roll angle ($\phi$) to ensure balance, moderate penalty on steering angle ($\delta$).
-*   $R = 1$: Penalizes aggressive control action
+*   $Q = \text{diag}[20.0, 6.0, 3.5]$: High penalty on roll angle ($\phi$) to ensure balance, moderate penalty on steering angle ($\delta$).
+*   $R = 1.5$: Penalizes aggressive control action
 
 **B. Cascaded PID Controller**
 
@@ -101,10 +100,11 @@ This scaling ensures that at low speeds (where steering has less effect on roll)
 
 **(3) Tuning Process**
 
-The base parameters ($K_{p,base}, K_{d,base}$) were tuned at a reference velocity $v_{ref}=3.0$ m/s using the Ziegler-Nichols heuristic:  
+The base parameters ($K_{p,base}, K_{d,base}$) were tuned at a reference velocity $v_{ref}=2.0$ m/s using the Ziegler-Nichols heuristic:  
 1.  $K_d$ was set to 0, and $K_p$ was increased until the system exhibited sustained oscillation around the upright position.  
 2.  $K_d$ was then introduced to provide damping and eliminate overshoot.  
 3.  The velocity scaling factor was clipped to the range $[0.2, 5.0]$ to prevent instability at extreme speeds.
+The final base gains were set to $K_{p,base} = 4.0$ and $K_{d,base} = 0.4$, which provided stable balance without excessive oscillation at $v_{ref} = 2.0$ m/s.
 
 
 ## **4 Specifications of Hardware Platform**
