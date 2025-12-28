@@ -104,6 +104,7 @@ The base parameters ($K_{p,base}, K_{d,base}$) were tuned at a reference velocit
 1.  $K_d$ was set to 0, and $K_p$ was increased until the system exhibited sustained oscillation around the upright position.  
 2.  $K_d$ was then introduced to provide damping and eliminate overshoot.  
 3.  The velocity scaling factor was clipped to the range $[0.2, 5.0]$ to prevent instability at extreme speeds.
+
 The final base gains were set to $K_{p,base} = 4.0$ and $K_{d,base} = 0.4$, which provided stable balance without excessive oscillation at $v_{ref} = 2.0$ m/s.
 
 
