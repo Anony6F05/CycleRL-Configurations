@@ -5,7 +5,7 @@
 | Parameter Category | Symbol | Value/Range |
 | :--- | :---: | :--- |
 | **_Inertial Properties (from USD)_** | | |
-| Frame Mass | $m_{frame}$ | 18.5 kg |
+| Frame Mass | $m_{frame}$ | 15.8 kg |
 | Handlebar Mass | $m_{handle}$ | 1.9 kg |
 | Front / Rear Wheel Mass | $m_{wheel}$ | 2.5 kg / 4.5 kg |
 | Frame Inertia ($I_{xx}, I_{yy}, I_{zz}$) | $I_{frame}$ | [0.95, 1.12, 0.45] kg·m² |
@@ -18,17 +18,17 @@
 | Fork Offset | $l_{offset}$ | 0.01 m |
 | Max Steering Angle | $\delta_{max}$ | $\pm 45$° |
 | **_Actuator Dynamics_** | | |
-| Steering Motor Max Torque | $\tau_{steer}^{max}$ | 12.0 N·m |
-| Steering Joint Damping | $d_{steer}$ | 0.5 N·m·s/rad |
-| Drive Motor Max Torque | $\tau_{drive}^{max}$ | 40.0 N·m |
-| Physics Simulation Step | $dt_{sim}$ | 0.05 s (50 Hz) |
+| Steering Motor Max Torque | $\tau_{steer}^{max}$ | 23.7 N·m |
+| Steering Joint Stiffness | $p_{steer}$ | 3.0 N·m/rad |
+| Steering Joint Damping | $d_{steer}$ | 0.15 N·m·s/rad |
+| Drive Motor Max Torque | $\tau_{drive}^{max}$ | 45.0 N·m |
+| Physics Simulation Step | $dt_{sim}$ | 0.02 s (50 Hz) |
 | **_Contact & Surface Interaction_** | | |
 | Surface Friction Coefficient | $\mu$ | $\mathcal{U}(0.5, 1.5)$ |
 | Restitution (Bounciness) | $e$ | 0.0 |
 | Contact Stiffness | $k_{contact}$ | $10^4$ N/m |
-| Linear/Angular Damping | $\zeta$ | 0.05 / 0.05 |
 | **_Simulation Hyperparameters_** | | |
-| Parallel Environments | $N_{env}$ | 4,096 |
+| Parallel Environments | $N_{env}$ | 16,384 |
 | Control Frequency | $f_{ctrl}$ | 50 Hz |
 | Episode Duration | $T_{ep}$ | 64 s (3,200 steps) |
 | Total Training Epochs | $N_{epoch}$ | 5,000 |
