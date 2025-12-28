@@ -65,7 +65,7 @@
 **(1) Modeling and Linearization**
 The LQR baseline is founded on the linearized dynamics of a bicycle modeled as an inverted pendulum. The state-space equation is defined as $\dot{x} = A(v)x + B(v)u$, where the state vector $x = [\phi, \dot{\phi}, \delta]^T$ consists of the roll angle, roll rate, and steering angle, and the control input $u = \dot{\delta}$ represents the steering rate command.
 
-The system matrices derived from the linearized equations of motion at a velocity $v$ are: $A(v) = \begin{bmatrix} 0 & 1 & 0 \\ \frac{g}{h} & 0 & -\frac{v^2}{hL} \\ 0 & 0 & 0 \end{bmatrix}, \quad B(v) = \begin{bmatrix} 0 \\ -\frac{v}{L} \\ 1 \end{bmatrix}$, where $g$ is gravity, $h$ is the center of mass height, and $L$ is the wheelbase.
+The system matrices derived from the linearized equations of motion at a velocity $v$ are: $A(v) = \begin{bmatrix} 0 & 1 & 0 \\ \frac{g}{h} & 0 & -\frac{v^2}{hL} \\ 0 & 0 & 0 \end{bmatrix}$, $B(v) = \begin{bmatrix} 0 \\ -\frac{v}{L} \\ 1 \end{bmatrix}$, where $g$ is gravity, $h$ is the center of mass height, and $L$ is the wheelbase.
 
 **(2) Gain Scheduling and Tracking**
 Since the system dynamics $A(v)$ and $B(v)$ are velocity-dependent, a single gain matrix $K$ cannot stabilize the vehicle across the entire operating range. We employed a **gain scheduling** strategy:
