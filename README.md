@@ -8,7 +8,10 @@
 | Frame Mass | $m_{frame}$ | 15.8 kg |
 | Handlebar Mass | $m_{handle}$ | 1.9 kg |
 | Front / Rear Wheel Mass | $m_{wheel}$ | 2.5 kg / 4.5 kg |
-| Frame Inertia ($I_{xx}, I_{yy}, I_{zz}$) | $I_{frame}$ | [0.95, 1.12, 0.45] kg·m² |
+| Frame Inertia ($I_{xx_{fr}}, I_{yy_{fr}}, I_{zz_{fr}}$) | $I_{frame}$ | [0.761, 0.832, 1.561] kg·m² |
+| Handlebar Inertia ($I_{xx_{h}}, I_{yy_{h}}, I_{zz_{h}}$) | $I_{handlebar}$ | [0.022, 0.013, 0.021] kg·m² |
+| Front Wheel Inertia ($I_{xx_{fw}}, I_{yy_{fw}}, I_{zz_{fw}}$) | $I_{front}$ | [0.112, 0.112, 0.223] kg·m² |
+| Rear Wheel Inertia ($I_{xx_{rw}}, I_{yy_{rw}}, I_{zz_{rw}}$) | $I_{rear}$ | [0.201, 0.201, 0.401] kg·m² |
 | Center of Gravity Height | $h_{CoG}$ | 0.65 m |
 | **_Geometric Kinematics_** | | |
 | Wheelbase | $L$ | 1.1 m |
@@ -41,7 +44,7 @@
 | Hyperparameters                  | Value                           |
 | -------------------------------- | ------------------------------- |
 | **_PPO Hyperparameters_**        |                                 |
-| Learning rate                    | 1 × 10^-4 (cosine annealing)    |
+| Learning rate                    | $1\times 10^{-4}$ (cosine annealing)    |
 | Discount factor γ                | 0.99                            |
 | GAE parameter λ                  | 0.95                            |
 | Policy clip ratio ε              | 0.2                             |
