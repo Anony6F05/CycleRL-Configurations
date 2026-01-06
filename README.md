@@ -68,7 +68,34 @@
 
 
 
-## **3 Implementation Details of Baseline Controllers**
+## **3 Specifications of Hardware Platform**
+
+| Component                 | Specification                   |
+| ------------------------- | ------------------------------- |
+| **Mechanical Platform**   |                                 |
+| Base vehicle              | Modified Mountain Bike          |
+| Wheelbase                 | 1,100 mm                        |
+| Total mass                | 25.0 kg (including electronics) |
+| Center of gravity height  | 0.65 m                          |
+| Wheel diameter            | 0.66 m                          |
+|Steering Axis Tilt         | 20.0°                           |
+| **Computational System**  |                                 |
+| Main processor            | NVIDIA Jetson Orin NX           |
+| Memory                    | 16 GB LPDDR5                    |
+| Storage                   | 512 GB NVMe SSD                 |
+| Operating system          | Ubuntu 20.04                    |
+| **Sensing and Actuation** |                                 |
+| IMU                       | WheelTec N100                   |
+| Steering servo motor      | Unitree GO-M8010-6              |
+| Hub motor                 | BaFang RM G020.500.D 12         |
+| Power system              | 48V 9.6Ah lithium battery       |
+
+
+
+
+
+
+## **4 Implementation Details of Baseline Controllers**
 
 **A. Linear Quadratic Regulator (LQR)**
 
@@ -116,33 +143,6 @@ The base parameters ($K_{p,base}, K_{d,base}$) were tuned at a reference velocit
 3.  The velocity scaling factor was clipped to the range $[0.2, 5.0]$ to prevent instability at extreme speeds.
 
 The final base gains were set to $K_{p,base} = 4.0$ and $K_{d,base} = 0.4$, which provided stable balance without excessive oscillation at $v_{ref} = 2.0$ m/s.
-
-
-
-
-
-## **4 Specifications of Hardware Platform**
-
-| Component                 | Specification                   |
-| ------------------------- | ------------------------------- |
-| **Mechanical Platform**   |                                 |
-| Base vehicle              | Modified Mountain Bike          |
-| Wheelbase                 | 1,100 mm                        |
-| Total mass                | 25.0 kg (including electronics) |
-| Center of gravity height  | 0.65 m                          |
-| Wheel diameter            | 0.66 m                          |
-|Steering Axis Tilt         | 20.0°                           |
-| **Computational System**  |                                 |
-| Main processor            | NVIDIA Jetson Orin NX           |
-| Memory                    | 16 GB LPDDR5                    |
-| Storage                   | 512 GB NVMe SSD                 |
-| Operating system          | Ubuntu 20.04                    |
-| **Sensing and Actuation** |                                 |
-| IMU                       | WheelTec N100                   |
-| Steering servo motor      | Unitree GO-M8010-6              |
-| Hub motor                 | BaFang RM G020.500.D 12         |
-| Power system              | 48V 9.6Ah lithium battery       |
-
 
 
 
