@@ -15,7 +15,7 @@
 | Center of Gravity Height                                     |      $h_{CoG}$       | 0.65 m                      |
 | **_Geometric Kinematics_**                                   |                      |                             |
 | Wheelbase                                                    |         $L$          | 1.1 m                       |
-| Wheel Radius                                                 |     $r_{wheel}$      | 0.33 m                      |
+| Wheel Diameter                                               |     $d_{wheel}$      | 0.66 m                      |
 | Steering Axis Tilt (Caster Angle)                            |       $\alpha$       | 20.0°                       |
 | Mechanical Trail                                             |     $t_{trail}$      | 0.11 m                      |
 | Fork Offset                                                  |     $l_{offset}$     | 0.01 m                      |
@@ -130,6 +130,8 @@ The final base gains were set to $K_{p,base} = 4.0$ and $K_{d,base} = 0.4$, whic
 | Wheelbase                 | 1,100 mm                        |
 | Total mass                | 25.0 kg (including electronics) |
 | Center of gravity height  | 0.65 m                          |
+| Wheel diameter            | 0.66 m                          |
+|Steering Axis Tilt         | 20.0°                           |
 | **Computational System**  |                                 |
 | Main processor            | NVIDIA Jetson Orin NX           |
 | Memory                    | 16 GB LPDDR5                    |
