@@ -1,0 +1,5 @@
+operating_status_straight_turn_vel.png
+operating_status_turn_1.png
+operating_status_turn_2.png
+operating_status_bumpy.png
+operating_status_auto_lane.png
